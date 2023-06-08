@@ -6,3 +6,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root{
+  --bg-primary: white;
+  --bg-button: black;
+}
+
+.bg-common-color{
+  background-color: var(--bg-primary);
+}
+.text-common-color{
+  color: var(--bg-button)
+}
+.button-color{
+  background-color: var(--bg-button);
+}
+.custom-header {
+  height: calc(100vh - 85px) !important;
+}

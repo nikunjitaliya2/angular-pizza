@@ -1,14 +1,14 @@
-<div class="px-16 ">
+<div class="container mx-auto">
   <div class="flex justify-between py-4">
-    <div class="">
+    <div class="cursor-pointer" routerLink="/">
       <img src="assets/pizza-images/img/logo.png" alt="LOGO">
     </div>
     <ul class="flex items-center text-lg text font-medium">
-      <li class="p-2">Menu</li>
-      <li class="p-2">Offers</li>
-      <li class="p-2">Register</li>
-      <li class="p-2">Login</li>
-      <li class="py-2 px-4 bg-orange-600 rounded-lg">
+      <li class="p-2 cursor-pointer" routerLink="/">Menu</li>
+      <li class="p-2 cursor-pointer" routerLink="/offers">Offers</li>
+      <li class="p-2 cursor-pointer" routerLink="/auth/register">Register</li>
+      <li class="p-2 cursor-pointer" routerLink="/auth/login">Login</li>
+      <li class="py-2 px-4 button-color rounded-lg cursor-pointer"  routerLink="/cart">
         <button type="button" class="flex items-center text-white P-2">
           <i class="fa-solid fa-cart-plus "></i>
         </button>
@@ -16,3 +16,4 @@
     </ul>
   </div>
 </div>
+<router-outlet></router-outlet>
