@@ -7,9 +7,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @tailwind components;
 @tailwind utilities;
 
+app-root {   z-index: 1; }
+app-toaster, .toast-class {   z-index: 211; }
 :root{
-  --bg-primary: white;
-  --bg-button: black;
+  --bg-primary: #F2F2F2;
+  --bg-button: #11572D;
+  --bg-disable : #86bab8;
 }
 
 .bg-common-color{
@@ -23,4 +26,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 .custom-header {
   height: calc(100vh - 85px) !important;
+}
+.button-color:disabled {
+  background-color: var(--bg-disable);
+  cursor: not-allowed;
 }

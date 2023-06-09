@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {UserService} from "../../core/service/user/user.service";
+import {TOAST_STATE, ToastService} from "../../core/service/toast.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-login',
@@ -10,12 +12,15 @@ import {UserService} from "../../core/service/user/user.service";
 export class UserLoginComponent implements OnInit {
 
   myForm: FormGroup | any;
- loginData: object = {};
+  loginData: object = {};
 
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-  ) {}
+    private toast: ToastService,
+    private router: Router
+  ) {
+  }
 
   ngOnInit(): void {
     this.myForm = this.formBuilder.group({
@@ -28,12 +33,17 @@ export class UserLoginComponent implements OnInit {
     if (this.myForm.valid) {
       this.userService.login(this.myForm.value).subscribe(
         (response: any) => {
-          console.log('response', response);
           this.loginData = response;
+          localStorage.setItem('user-details', JSON.stringify(this.loginData))
+          console.log(this.loginData)
+          this.router.navigate(['/'])
           this.myForm.reset();
         },
         (error) => {
           console.log(error);
+          this.toast.showToast(
+            TOAST_STATE.danger,
+            error.error.message);
         }
       )
     }

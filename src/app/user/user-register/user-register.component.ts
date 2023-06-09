@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import {UserService} from "../../core/service/user/user.service";
+import {TOAST_STATE, ToastService} from "../../core/service/toast.service";
 
 @Component({
   selector: 'app-user-register',
@@ -10,25 +11,32 @@ import {UserService} from "../../core/service/user/user.service";
 })
 export class UserRegisterComponent implements OnInit {
   register: FormGroup | any;
-  constructor(private formBuilder : FormBuilder, private httpService : UserService) {
+  constructor(private formBuilder : FormBuilder, private httpService : UserService, private  router: Router, private toast: ToastService) {
   }
 
   ngOnInit(): void {
     this.register = this.formBuilder.group({
-      name: new FormControl('', [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.minLength(6)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
+
   }
 
   onSubmit() {
     if(this.register.valid){
       this.httpService.register(this.register.value).subscribe(
         (res) => {
-          console.log('Response', res);
+          this.toast.showToast(
+            TOAST_STATE.success,
+            'You have successfully registered!');
+          this.toast.dismiss()
+          this.router.navigateByUrl('/auth/login')
         },
         (error) => {
-          console.log('Error Found', error)
+          this.toast.showToast(
+            TOAST_STATE.danger,
+            error.error.message);
         }
       )
     }

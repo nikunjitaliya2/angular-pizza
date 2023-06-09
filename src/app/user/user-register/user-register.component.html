@@ -33,6 +33,14 @@
         <input name="name"
                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                id="username" type="text" placeholder="Enter Name" formControlName="name">
+      <div class="text-red-500">
+        <div *ngIf="register.controls.name.touched && register.controls.name.errors?.required">
+          Name is required.
+        </div>
+        <div *ngIf="register.controls.name.touched && register.controls.name.errors?.minlength">
+          Name Should be 6 character long.
+        </div>
+      </div>
       </div>
       <div class="mb-4">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="useremail">
@@ -41,6 +49,15 @@
         <input name="email"
                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                id="useremail" type="email" placeholder="Enter your email" formControlName="email">
+        <div
+             class="text-red-500">
+          <div *ngIf="register.controls.email.touched && register.controls.email.errors?.required">
+            Email is required.
+          </div>
+          <div *ngIf="register.controls.email.touched && register.controls.email.errors?.email">
+            Invalid email format.
+          </div>
+        </div>
       </div>
       <div class="mb-6">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
@@ -48,13 +65,22 @@
         </label>
         <input name="password"
                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-               id="password" type="password" placeholder="******************" formControlName="password">
+               id="password" type="password" placeholder="Enter your password" formControlName="password">
+        <div
+          class="text-red-500">
+          <div *ngIf="register.controls.password.touched && register.controls.password.errors?.required">
+            Password is required.
+          </div>
+          <div *ngIf="register.controls.password.touched && register.controls.password.errors?.minlength">
+            Password Should be 6 character long
+          </div>
+        </div>
       </div>
       <div class="flex items-center justify-between">
         <span class="inline-block align-baseline font-bold text-sm cursor-pointer text-common-color" routerLink="/auth/login">
           Already have account?
         </span>
-        <button class="rounded-full button-color px-6 py-2 text-white mt-2" type="submit">Register</button>
+        <button class="rounded-full button-color px-6 py-2 text-white mt-2" [disabled]="register.invalid" type="submit">Register</button>
       </div>
     </form>
     <p class="text-center text-gray-500 text-xs">
@@ -62,3 +88,4 @@
     </p>
   </div>
 </section>
+<app-toaster></app-toaster>

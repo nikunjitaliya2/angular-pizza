@@ -8,20 +8,23 @@ import { FooterComponent } from './common/footer/footer.component';
 import {HomeModule} from "./home/home.module";
 import {HeaderComponent} from "./common/header/header.component";
 import {HttpClientModule} from "@angular/common/http";
+import { ToasterComponent } from './common/toastr/toaster.component';
+import {UserModule} from "./user/user.module";
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
-    HeaderComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HomeModule,
-    HttpClientModule
+    HttpClientModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]
