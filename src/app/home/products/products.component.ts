@@ -20,6 +20,10 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   this.getMenuList()
+  }
+
+  getMenuList(){
     this.product.getAllMenus().subscribe(
       (res: any) => {
         if (this.cartArr.length !== 0) {

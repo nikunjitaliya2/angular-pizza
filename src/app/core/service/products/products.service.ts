@@ -9,7 +9,7 @@ export class ProductsService {
 
   constructor(private httpClient: HttpClient) {
   }
-  getAllMenus(){
-    return this.httpClient.get(`${environment.BaseUrl}/menus`);
+  getAllMenus(data: any = []){
+    return this.httpClient.post(`${environment.BaseUrl}/menus`, data);
   }
 }

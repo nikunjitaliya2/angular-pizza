@@ -10,6 +10,7 @@ import {HeaderComponent} from "./common/header/header.component";
 import {HttpClientModule} from "@angular/common/http";
 import { ToasterComponent } from './common/toastr/toaster.component';
 import {UserModule} from "./user/user.module";
+import {CartModule} from "./customer/cart.module";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {UserModule} from "./user/user.module";
     BrowserAnimationsModule,
     HomeModule,
     HttpClientModule,
-    UserModule
+    UserModule,
+    CartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

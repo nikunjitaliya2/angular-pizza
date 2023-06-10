@@ -4,21 +4,31 @@
         <div class="w-full md:w-64 shadow shadow-gray-500/50 p-2 my-2" *ngFor="let item of productDetails">
           <div class="h-40 w-40 mx-auto relative">
             <img class="h-full w-full rounded-full object-cover" [src]="item.image" alt="">
-            <div class="absolute inset-0 rounded-full shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] shadow-red-500/50"></div>
+            <div class="absolute inset-0 rounded-full shadow-lg shadow-gray-500/50"></div>
           </div>
             <div class="text-center">
                 <h2 class="mb-4 text-lg">{{item.name}}</h2>
                 <span class="size py-1 px-4 rounded-full uppercase text-xs">{{item.size}}</span>
                 <div class="flex items-center justify-around mt-6">
                     <span class="font-bold text-lg">₹{{item.price}}</span>
-                    <button
-                        (click)="addCart(item, item._id)"
-                        class="rounded-full border border-[var(--bg-button)] text-common-color px-6 py-2 text-white mt-2">
-                        <span *ngIf="!item?.isActive">+ </span>
-                        <span  *ngIf="item?.isActive">- </span>
-                        <span>Add</span>
-                    </button>
+<!--                  <button-->
+<!--                    (click)="addCart(item, item._id)"-->
+<!--                    class="rounded-full px-6 py-2 mt-2 border" [ngClass]="!item?.isActive ? 'border-[var(&#45;&#45;bg-button)] text-common-color' : ' border-[var(&#45;&#45;bg-primary)] text-white button-color '">-->
+<!--                    <span *ngIf="!item?.isActive">+ Add</span>-->
+<!--                    <span  *ngIf="item?.isActive">- Remove</span>-->
+<!--                  </button>-->
+                  <button
+                    (click)="addCart(item, item._id)"
+                    class="rounded-full px-6 py-2 mt-2 border transition-all duration-300 {{ !item?.isActive ? 'bg-button text-common-color' : 'button-color text-white' }}"
+                  >
+                    <span *ngIf="!item?.isActive">+ Add</span>
+                    <span *ngIf="item?.isActive">- Remove</span>
+                  </button>
+
+
+
                 </div>
+
             </div>
         </div>
   </div>
