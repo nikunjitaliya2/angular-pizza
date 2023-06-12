@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'DM Sans', sans-serif; }
 
 @tailwind base;
 @tailwind components;
@@ -13,6 +13,7 @@ app-toaster, .toast-class {   z-index: 211; }
   --bg-primary: #F2F2F2;
   --bg-button: #11572D;
   --bg-disable : #86bab8;
+  --box-shadow-color: rgba(63, 217, 125, 0.48);
 }
 
 .bg-common-color{

@@ -14,6 +14,12 @@ export class CartComponent implements OnInit {
   userContact: FormGroup | any;
   quantity: number = 1
   totalCost = 0;
+  OrderDetails = {
+    Address : '',
+    PhoneNumber : 0,
+    OrderedItem : String,
+    TotalCost  : 0
+  }
 
   constructor(
     private router: Router,
@@ -21,6 +27,7 @@ export class CartComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.availableCart = <string[]>JSON.parse(<string>localStorage.getItem('cart')) || []
+    this.OrderDetails.OrderedItem = this.availableCart
   }
 
   ngOnInit(): void {
@@ -29,7 +36,9 @@ export class CartComponent implements OnInit {
       Address: new FormControl('', [Validators.required]),
       Phone: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
-    setTimeout(()=>{this.totalCost = this.products.reduce((acc, obj) => acc + obj.price, 0)},100)
+  }
+  totalCostFn(){
+    this.totalCost = this.products.reduce((acc, obj) => acc + obj.price, 0)
   }
 
   allCart() {
@@ -40,6 +49,7 @@ export class CartComponent implements OnInit {
             res.filter((element: any) => {
               if (element._id === item) {
                 this.products.push({...element, quantity: 1})
+                this.totalCostFn()
               }
             })
           });
@@ -55,10 +65,11 @@ export class CartComponent implements OnInit {
 
   orderNow() {
     if (this.userContact.valid) {
-      console.log('User contact Details', this.userContact.value)
-    } else {
-      console.log('Invalid Credentials', this.userContact.value)
-      return
+      this.OrderDetails.Address = this.userContact.value.Address
+      this.OrderDetails.PhoneNumber = this.userContact.value.Phone
+      this.OrderDetails.TotalCost = this.totalCost
+
+      console.log('User contact Details', this.OrderDetails)
     }
   }
 
@@ -82,6 +93,22 @@ export class CartComponent implements OnInit {
     }
   }
 
+  removeCart(data :any , id : string){
+    const newArr = [...this.products];
+    const newCartArr = newArr.filter((el) => el._id !== id);
+    const index = newArr.findIndex((el: { _id: string; }) => el._id === id)
+    newArr.splice(index, 1, ...newCartArr);
+    this.products = newCartArr
+    this.menuRemoveToLocal( data._id)
+    this.totalCostFn()
+  }
+  menuRemoveToLocal(id: string) {
+    const newArr = [...this.availableCart];
+    const newCartArr = newArr.filter((el) => el !== id);
+    this.availableCart = newCartArr
+
+    localStorage.setItem('cart', JSON.stringify(newCartArr));
+  }
 
   back() {
     this.router.navigateByUrl('/')

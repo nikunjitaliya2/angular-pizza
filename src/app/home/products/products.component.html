@@ -1,35 +1,39 @@
 <section class="container mx-auto py-8">
   <h1 class="text-xl font-bold mb-8">All Pizzas</h1>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 col-gap-4 row-gap-4">
-        <div class="w-full md:w-64 shadow shadow-gray-500/50 p-2 my-2" *ngFor="let item of productDetails">
-          <div class="h-40 w-40 mx-auto relative">
-            <img class="h-full w-full rounded-full object-cover" [src]="item.image" alt="">
-            <div class="absolute inset-0 rounded-full shadow-lg shadow-gray-500/50"></div>
-          </div>
-            <div class="text-center">
-                <h2 class="mb-4 text-lg">{{item.name}}</h2>
-                <span class="size py-1 px-4 rounded-full uppercase text-xs">{{item.size}}</span>
-                <div class="flex items-center justify-around mt-6">
-                    <span class="font-bold text-lg">₹{{item.price}}</span>
-<!--                  <button-->
-<!--                    (click)="addCart(item, item._id)"-->
-<!--                    class="rounded-full px-6 py-2 mt-2 border" [ngClass]="!item?.isActive ? 'border-[var(&#45;&#45;bg-button)] text-common-color' : ' border-[var(&#45;&#45;bg-primary)] text-white button-color '">-->
-<!--                    <span *ngIf="!item?.isActive">+ Add</span>-->
-<!--                    <span  *ngIf="item?.isActive">- Remove</span>-->
-<!--                  </button>-->
-                  <button
-                    (click)="addCart(item, item._id)"
-                    class="rounded-full px-6 py-2 mt-2 border transition-all duration-300 {{ !item?.isActive ? 'bg-button text-common-color' : 'button-color text-white' }}"
-                  >
-                    <span *ngIf="!item?.isActive">+ Add</span>
-                    <span *ngIf="item?.isActive">- Remove</span>
-                  </button>
-
-
-
-                </div>
-
-            </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-10">
+    <div class="w-full md:w-64 shadow shadow-gray-500/50 p-2 my-2" *ngFor="let item of productDetails">
+      <div class="h-40 w-40 mx-auto relative">
+        <img class="h-full w-full rounded-full object-cover" [src]="item.image" alt="">
+        <div class="absolute inset-0 rounded-full shadow-lg shadow-gray-500/50"></div>
+      </div>
+      <div class="text-center">
+        <h2 class="mb-4 text-lg">{{item.name}}</h2>
+        <span class="size py-1 px-4 rounded-full uppercase text-xs">{{item.size}}</span>
+        <div class="flex items-center justify-around mt-6">
+          <span class="font-bold text-lg">₹{{item.price}}</span>
+          <button
+            (click)="addCart(item, item._id)"
+            class="rounded-full px-6 py-2 mt-2 border transition-all duration-500 hover:bg-[var(--bg-button)] hover:text-[var(--bg-primary)] {{ !item?.isActive ? 'bg-button text-common-color' : 'button-color text-white' }}"
+          >
+            <span *ngIf="!item?.isActive">+ Add</span>
+            <span *ngIf="item?.isActive">- Add</span>
+          </button>
         </div>
+      </div>
+    </div>
   </div>
 </section>
+<!--    <div class="card education rounded-lg p-2 my-2">-->
+<!--      <div class="overlay"></div>-->
+<!--      <div class="circle">-->
+<!--        <img class="h-full w-full rounded-full object-cover" src="https://loremflickr.com/640/480/food" alt="">-->
+<!--      </div>-->
+<!--      <div class="first-div">-->
+<!--        <span class="mb-4 text-lg">7 Cheesy</span>-->
+<!--        <span class="py-1 px-4 rounded-full uppercase text-xs">medium</span>-->
+<!--      </div>-->
+<!--      <div class="flex items-center justify-around mt-8 w-full border border-gray-300 second-div">-->
+<!--        <span class="font-bold text-lg">₹300</span>-->
+<!--        <button class="rounded-full px-6 py-2  border transition-all duration-300"> Add</button>-->
+<!--      </div>-->
+<!--    </div>-->

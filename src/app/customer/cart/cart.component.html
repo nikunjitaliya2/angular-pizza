@@ -14,7 +14,7 @@
         <h1 class="uppercase">{{item.name}}</h1>
         <span class="uppercase">{{item.size}}</span>
         <div>
-          <button class="text-gray-400 transition duration-100 ease-in-out hover:text-[var(--bg-button)]">Remove</button>
+          <button class="text-gray-400 transition duration-100 ease-in-out hover:text-[var(--bg-button)]" (click)="removeCart(item, item._id)">Remove</button>
         </div>
       </div>
       <div class="flex-1">
@@ -35,16 +35,16 @@
       <div>
         <form class="mt-12" [formGroup]="userContact" (ngSubmit)="orderNow()">
           <div>
-            <input type="text" name="Address" class="border border-gray-400 p-2 w-1/2 mb-4"
+            <input type="text" name="Address" class="border border-gray-400 p-2 w-1/2 mb-2"
                    formControlName="Address"
                    placeholder="Enter Address">
             <div>
               <span *ngIf="userContact.get('Address').invalid && userContact.get('Address').touched"
-                    class="text-red-500">enter a address.</span>
+                    class="text-red-500">Enter a address.</span>
             </div>
           </div>
           <div>
-            <input type="text" class="border border-gray-400 p-2 w-1/2 mb-4"
+            <input type="text" class="border border-gray-400 p-2 w-1/2 my-2"
                    name="uPhone"
                    formControlName="Phone"
                    placeholder="Phone Number">

@@ -47,6 +47,7 @@ export class ProductsComponent implements OnInit {
         this.toast.showToast(
           TOAST_STATE.danger,
           error.error.message);
+        this.toast.dismiss()
       }
     )
   }
