@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   OrderDetails: any = {
     Address : '',
     PhoneNumber : 0,
-    OrderedItem : '',
+    OrderedItem : [],
     TotalCost  : 0
   }
 
