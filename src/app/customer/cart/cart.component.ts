@@ -98,7 +98,8 @@ export class CartComponent implements OnInit {
     const newCartArr = newArr.filter((el) => el._id !== id);
     const index = newArr.findIndex((el: { _id: string; }) => el._id === id)
     newArr.splice(index, 1, ...newCartArr);
-    this.products = newCartArr
+    this.products = newCartArr;
+    console.log('remove', this.products)
     this.menuRemoveToLocal( data._id)
     this.totalCostFn()
   }
