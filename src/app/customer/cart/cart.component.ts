@@ -9,7 +9,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  availableCart: string[]
+  availableCart: any[]
   products: any[] = []
   userContact: FormGroup | any;
   quantity: number = 1
