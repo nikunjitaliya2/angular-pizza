@@ -14,10 +14,10 @@ export class CartComponent implements OnInit {
   userContact: FormGroup | any;
   quantity: number = 1
   totalCost = 0;
-  OrderDetails = {
+  OrderDetails: any = {
     Address : '',
     PhoneNumber : 0,
-    OrderedItem : String,
+    OrderedItem : '',
     TotalCost  : 0
   }
 
@@ -27,7 +27,7 @@ export class CartComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.availableCart = <string[]>JSON.parse(<string>localStorage.getItem('cart')) || []
-    this.OrderDetails.OrderedItem = this.availableCart
+
   }
 
   ngOnInit(): void {
@@ -68,7 +68,7 @@ export class CartComponent implements OnInit {
       this.OrderDetails.Address = this.userContact.value.Address
       this.OrderDetails.PhoneNumber = this.userContact.value.Phone
       this.OrderDetails.TotalCost = this.totalCost
-
+      this.OrderDetails.OrderedItem = this.availableCart
       console.log('User contact Details', this.OrderDetails)
     }
   }
