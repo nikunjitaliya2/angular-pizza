@@ -35,27 +35,37 @@
       <div>
         <form class="mt-12" [formGroup]="userContact" (ngSubmit)="orderNow()">
           <div>
-            <input type="text" name="Address" class="border border-gray-400 p-2 w-1/2 mb-2"
-                   formControlName="Address"
+            <input type="text" name="address" class="border border-gray-400 p-2 w-1/2 mb-2"
+                   formControlName="address"
                    placeholder="Enter Address">
             <div>
-              <span *ngIf="userContact.get('Address').invalid && userContact.get('Address').touched"
+              <span *ngIf="userContact.get('address').invalid && userContact.get('address').touched"
                     class="text-red-500">Enter a address.</span>
             </div>
           </div>
           <div>
             <input type="text" class="border border-gray-400 p-2 w-1/2 my-2"
-                   name="uPhone"
-                   formControlName="Phone"
+                   name="phone"
+                   formControlName="phone"
                    placeholder="Phone Number">
-            <div>
-              <span *ngIf="userContact.get('Phone').invalid && userContact.get('Phone').touched"
-                    class="text-red-500">Enter a Phone Number.</span>
+            <div  class="text-red-500">
+              <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.required">
+                Password is required.
+              </div>
+              <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.minlength">
+                Phone number should be 10 character long.
+              </div>
+              <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.maxlength">
+                Phone number cannot exceed 10 characters.
+              </div>
+              <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.pattern">
+                Phone number should only take integer.
+              </div>
             </div>
           </div>
           <div>
             <button class="rounded-full button-color px-6 py-2 text-white mt-2" type="submit"
-                    [disabled]="userContact.invalid">Order Now
+                    [disabled]="userContact.invalid">{{!UserDetails ? "Login Now" : "Order Now"}}
             </button>
           </div>
         </form>

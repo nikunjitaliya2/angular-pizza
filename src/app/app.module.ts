@@ -11,13 +11,15 @@ import {HttpClientModule} from "@angular/common/http";
 import { ToasterComponent } from './common/toastr/toaster.component';
 import {UserModule} from "./user/user.module";
 import {CartModule} from "./customer/cart.module";
+import { NotfoundComponent } from './common/notfound/notfound.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    NotfoundComponent
   ],
   imports: [
     BrowserModule,

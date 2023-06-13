@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {ProductsService} from "../../core/service/products/products.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {TOAST_STATE, ToastService} from "../../core/service/toast.service";
+import {IUser} from "../../interfaces/interface";
 
 @Component({
   selector: 'app-cart',
@@ -14,30 +16,39 @@ export class CartComponent implements OnInit {
   userContact: FormGroup | any;
   quantity: number = 1
   totalCost = 0;
-  OrderDetails: any = {
-    Address : '',
-    PhoneNumber : 0,
-    OrderedItem : [],
-    TotalCost  : 0
-  }
+  UserDetails = JSON.parse(<string>localStorage.getItem('user-details'))
+  OrderDetails =
+    {
+      customerId: '',
+      address: '',
+      phone: 0,
+      paymentType: 'COD',
+      paymentStatus: false,
+    }
 
   constructor(
     private router: Router,
     private productsService: ProductsService,
     private formBuilder: FormBuilder,
+    private toast: ToastService
   ) {
     this.availableCart = <string[]>JSON.parse(<string>localStorage.getItem('cart')) || []
-
   }
 
   ngOnInit(): void {
     this.allCart()
     this.userContact = this.formBuilder.group({
-      Address: new FormControl('', [Validators.required]),
-      Phone: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      address: new FormControl('', [Validators.required]),
+      phone: new FormControl('',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.pattern('[0-9]{10,}')]),
     });
   }
-  totalCostFn(){
+
+  totalCostFn() {
     this.totalCost = this.products.reduce((acc, obj) => acc + obj.price, 0)
   }
 
@@ -64,14 +75,46 @@ export class CartComponent implements OnInit {
   }
 
   orderNow() {
-    if (this.userContact.valid) {
-      this.OrderDetails.Address = this.userContact.value.Address
-      this.OrderDetails.PhoneNumber = this.userContact.value.Phone
-      this.OrderDetails.TotalCost = this.totalCost
-      this.OrderDetails.OrderedItem = this.availableCart
-      console.log('User contact Details', this.OrderDetails)
+
+    if (!this.UserDetails) {
+      this.toast.showToast(
+        TOAST_STATE.success,
+        'Going to Login First');
+      this.toast.dismiss()
+      this.router.navigate(['/auth/login'])
+    } else {
+      const items = this.saveOrderDetails(this.UserDetails)
+      this.productsService.createOrder(items).subscribe(
+      (res)=>{
+        // console.log('res',res)
+        this.toast.showToast(
+          TOAST_STATE.success,
+          'Order Is Successfully');
+        this.toast.dismiss()
+        this.router.navigate(['/'])
+      },
+      (err)=>{
+        console.log('err',err)
+      })
     }
   }
+
+  saveOrderDetails(UserDetails: IUser) {
+    return this.products.map((el) => {
+      let item = {...el};
+      item.itemId = item._id
+      delete item._id
+      return {
+        item: item,
+        customerId: UserDetails._id,
+        address: this.userContact.value.address,
+        phone: this.userContact.value.phone,
+        paymentType: this.OrderDetails.paymentType,
+        paymentStatus: this.OrderDetails.paymentStatus,
+      }
+    })
+  }
+
 
   TotalQuantity(operator: string, id: string) {
     const item = this.products.find(item => item._id === id);
@@ -93,14 +136,14 @@ export class CartComponent implements OnInit {
     }
   }
 
-  removeCart(data :any , id : string){
+  removeCart(data: any, id: string) {
     const newArr = [...this.products];
     const newCartArr = newArr.filter((el) => el._id !== id);
     const index = newArr.findIndex((el: { _id: string; }) => el._id === id)
     newArr.splice(index, 1, ...newCartArr);
     this.products = newCartArr;
     console.log('remove', this.products)
-    this.menuRemoveToLocal( data._id)
+    this.menuRemoveToLocal(data._id)
     this.totalCostFn()
   }
   menuRemoveToLocal(id: string) {

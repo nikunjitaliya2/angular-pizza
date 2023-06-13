@@ -12,4 +12,7 @@ export class ProductsService {
   getAllMenus(data: any = []){
     return this.httpClient.post(`${environment.BaseUrl}/menus`, data);
   }
+  createOrder(data : Array<object>){
+    return this.httpClient.post(`${environment.BaseUrl}/orders`, data);
+  }
 }

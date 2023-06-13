@@ -9,6 +9,7 @@
         <!--      <li class="p-2 cursor-pointer" routerLink="/offers">Offers</li>-->
         <li *ngIf="!isLogged" class="p-2 cursor-pointer" routerLink="/auth/register">Register</li>
         <li *ngIf="!isLogged" class="p-2 cursor-pointer" routerLink="/auth/login">Login</li>
+        <li *ngIf="isLogged" class="p-2 cursor-pointer" routerLink="/cart/orders">Your Order</li>
         <li *ngIf="isLogged && isAdmin" routerLink="/admin">Panel</li>
         <li *ngIf="isLogged">
           <button class="p-2 cursor-pointer" (click)="logoutRemove()"> Logout</button>

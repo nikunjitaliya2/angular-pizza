@@ -34,8 +34,8 @@ export class UserLoginComponent implements OnInit {
       this.userService.login(this.myForm.value).subscribe(
         (response: any) => {
           this.loginData = response;
-          localStorage.setItem('pizza-jwt-token',response.token);
-          console.log(response.token)
+          localStorage.setItem('user-details',JSON.stringify(response));
+          console.log(response)
           this.router.navigate(['/'])
           this.myForm.reset();
         },

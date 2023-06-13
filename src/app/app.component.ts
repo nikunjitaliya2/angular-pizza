@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
   }
   ngOnInit(): void {
     this.user =localStorage.getItem('user-details')
-    if (this.user) {
-      this.router.navigateByUrl('/')
-    }
+    // if (this.user) {
+    //   this.router.navigateByUrl('/')
+    // }
   }
 }
