@@ -4,29 +4,35 @@
       <div class="cursor-pointer" routerLink="/">
         <img src="assets/pizza-images/img/logo.png" alt="LOGO">
       </div>
-      <ul class="flex items-center text-lg gap-4 text font-medium">
-        <li class="p-2 cursor-pointer" routerLink="/">Menu</li>
-        <!--      <li class="p-2 cursor-pointer" routerLink="/offers">Offers</li>-->
-        <li *ngIf="!isLogged" class="p-2 cursor-pointer" routerLink="/auth/register">Register</li>
-        <li *ngIf="!isLogged" class="p-2 cursor-pointer" routerLink="/auth/login">Login</li>
-        <li *ngIf="isLogged" class="p-2 cursor-pointer" routerLink="/cart/orders">Your Order</li>
-        <li *ngIf="isLogged && isAdmin" routerLink="/admin">Panel</li>
-        <li *ngIf="isLogged">
-          <button class="p-2 cursor-pointer" (click)="logoutRemove()"> Logout</button>
-        </li>
-        <li class="button-color rounded-full cursor-pointer" routerLink="/cart">
-          <button type="button"
-                  class="relative inline-flex items-center p-3 text-sm
-                font-medium text-center text-white bg-primary rounded-lg">
-            <img src="assets/pizza-images/img/cart.png" alt="">
-            <div
-              class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white
-            bg-blue-500 rounded-full -top-2 -right-2 ">
-              {{cartDetails === undefined ? 0 : cartDetails}}
-            </div>
-          </button>
-        </li>
-      </ul>
+      <div class="flex items-center">
+        <button id="menuToggle" class="p-2 cursor-pointer sm:hidden" (click)="toggleMenu()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+            <path fill-rule="evenodd" d="M2 6a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6zm0 6a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-2zm0 6a1 1 0 0 1 1-1h18a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-2z"></path>
+          </svg>
+        </button>
+        <ul id="menu" class="flex items-center text-lg gap-4 text font-medium">
+          <li class="p-2 cursor-pointer" routerLink="/">Menu</li>
+          <li *ngIf="!isLogged" class="p-2 cursor-pointer" routerLink="/auth/register">Register</li>
+          <li *ngIf="!isLogged" class="p-2 cursor-pointer" routerLink="/auth/login">Login</li>
+          <li *ngIf="isLogged && isAdmin" class="p-2 cursor-pointer" routerLink="/admin/orders">Panel</li>
+          <li *ngIf="isLogged && !isAdmin" class="p-2 cursor-pointer" routerLink="/cart/orders">My Orders</li>
+          <li *ngIf="isLogged">
+            <button class="p-2 cursor-pointer" (click)="logoutRemove()"> Logout</button>
+          </li>
+          <li class="button-color rounded-full cursor-pointer" routerLink="/cart">
+            <button type="button"
+                    class="relative inline-flex items-center p-3 text-sm
+                    font-medium text-center text-white bg-primary rounded-lg">
+              <img src="assets/pizza-images/img/cart.png" alt="">
+              <div
+                class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white
+                bg-blue-500 rounded-full -top-2 -right-2 ">
+                {{cartDetails === undefined ? 0 : cartDetails}}
+              </div>
+            </button>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

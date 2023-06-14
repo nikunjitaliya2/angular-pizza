@@ -45,6 +45,7 @@ export class CartComponent implements OnInit {
           Validators.minLength(10),
           Validators.maxLength(10),
           Validators.pattern('[0-9]{10,}')]),
+      paymentType: new FormControl('',[Validators.required])
     });
   }
 
@@ -86,12 +87,12 @@ export class CartComponent implements OnInit {
       const items = this.saveOrderDetails(this.UserDetails)
       this.productsService.createOrder(items).subscribe(
       (res)=>{
-        // console.log('res',res)
         this.toast.showToast(
           TOAST_STATE.success,
           'Order Is Successfully');
         this.toast.dismiss()
-        this.router.navigate(['/'])
+        this.router.navigate(['/cart/orders'])
+        localStorage.removeItem('cart')
       },
       (err)=>{
         console.log('err',err)

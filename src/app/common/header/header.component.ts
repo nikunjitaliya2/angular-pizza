@@ -27,10 +27,20 @@ export class HeaderComponent implements OnInit , DoCheck{
 
   logoutRemove() {
     localStorage.removeItem('user-details')
+    localStorage.removeItem('cart')
     this.router.navigateByUrl('/auth/login')
   }
 
   ngDoCheck(): void {
     this.cartDetails = JSON.parse(<string>localStorage.getItem('cart'))?.length
+  }
+
+  toggleMenu() {
+    const menuToggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('menu');
+    if (menuToggle && menu) {
+      menuToggle.classList.toggle('active');
+      menu.classList.toggle('hidden');
+    }
   }
 }

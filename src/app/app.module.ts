@@ -8,10 +8,10 @@ import { FooterComponent } from './common/footer/footer.component';
 import {HomeModule} from "./home/home.module";
 import {HeaderComponent} from "./common/header/header.component";
 import {HttpClientModule} from "@angular/common/http";
-import { ToasterComponent } from './common/toastr/toaster.component';
 import {UserModule} from "./user/user.module";
 import {CartModule} from "./customer/cart.module";
 import { NotfoundComponent } from './common/notfound/notfound.component';
+import {AdminModule} from "./admin/admin.module";
 
 
 @NgModule({
@@ -19,7 +19,7 @@ import { NotfoundComponent } from './common/notfound/notfound.component';
     AppComponent,
     FooterComponent,
     HeaderComponent,
-    NotfoundComponent
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +28,8 @@ import { NotfoundComponent } from './common/notfound/notfound.component';
     HomeModule,
     HttpClientModule,
     UserModule,
-    CartModule
+    CartModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]
