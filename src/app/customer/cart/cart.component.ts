@@ -20,6 +20,7 @@ export class CartComponent implements OnInit {
   OrderDetails =
     {
       customerId: '',
+      items: this.products,
       address: '',
       phone: 0,
       paymentType: 'COD',
@@ -45,7 +46,7 @@ export class CartComponent implements OnInit {
           Validators.minLength(10),
           Validators.maxLength(10),
           Validators.pattern('[0-9]{10,}')]),
-      paymentType: new FormControl('',[Validators.required])
+      paymentType: new FormControl('', [Validators.required])
     });
   }
 
@@ -86,34 +87,35 @@ export class CartComponent implements OnInit {
     } else {
       const items = this.saveOrderDetails(this.UserDetails)
       this.productsService.createOrder(items).subscribe(
-      (res)=>{
-        this.toast.showToast(
-          TOAST_STATE.success,
-          'Order Is Successfully');
-        this.toast.dismiss()
-        this.router.navigate(['/cart/orders'])
-        localStorage.removeItem('cart')
-      },
-      (err)=>{
-        console.log('err',err)
-      })
+        (res) => {
+          this.toast.showToast(
+            TOAST_STATE.success,
+            'Order Is Successfully');
+          this.toast.dismiss()
+          if (this.UserDetails.role === 'customer') {
+            this.router.navigate(['/cart/orders'])
+          }
+          else {
+            this.router.navigate(['/admin/orders'])
+          }
+          localStorage.removeItem('cart')
+        },
+        (err) => {
+          console.log('err', err)
+        })
     }
   }
 
   saveOrderDetails(UserDetails: IUser) {
-    return this.products.map((el) => {
-      let item = {...el};
-      item.itemId = item._id
-      delete item._id
-      return {
-        item: item,
-        customerId: UserDetails._id,
-        address: this.userContact.value.address,
-        phone: this.userContact.value.phone,
-        paymentType: this.OrderDetails.paymentType,
-        paymentStatus: this.OrderDetails.paymentStatus,
-      }
-    })
+
+    this.OrderDetails.customerId = this.UserDetails._id;
+    this.OrderDetails.items = this.products;
+    this.OrderDetails.paymentType = this.userContact.value.paymentType;
+    this.OrderDetails.paymentStatus = false;
+    this.OrderDetails.phone = this.userContact.value.phone
+    this.OrderDetails.address = this.userContact.value.address
+
+    return this.OrderDetails
   }
 
 
@@ -147,6 +149,7 @@ export class CartComponent implements OnInit {
     this.menuRemoveToLocal(data._id)
     this.totalCostFn()
   }
+
   menuRemoveToLocal(id: string) {
     const newArr = [...this.availableCart];
     const newCartArr = newArr.filter((el) => el !== id);

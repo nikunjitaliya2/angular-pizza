@@ -17,7 +17,7 @@ export class ProductsService {
   getAllMenus(data: any = []){
     return this.httpClient.post(`${environment.BaseUrl}/menus`, data);
   }
-  createOrder(data : Array<object>){
+  createOrder(data : any){
     return this.httpClient.post(`${environment.BaseUrl}/orders`, data, this.headerService.setHeaders() ).pipe(catchError(this.headerService.errorHandler));
   }
 }
