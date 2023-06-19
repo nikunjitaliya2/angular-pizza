@@ -13,10 +13,12 @@ export class InterceptorInterceptor implements HttpInterceptor {
   constructor() {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    let TokenKey = localStorage.getItem('pizza-jwt-token');
+    let TokenKey = JSON.parse(<string>localStorage.getItem('user-details')).token;
+    console.log('TokenKey',TokenKey)
     const req = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${TokenKey}`,
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${TokenKey}`,
       },
     });
     return next.handle(req);

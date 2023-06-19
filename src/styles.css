@@ -9,10 +9,11 @@ body { margin: 0; font-family: 'DM Sans', sans-serif; }
 
 app-root {   z-index: 1; }
 app-toaster, .toast-class {   z-index: 211; }
-:root{
+:root {
   --bg-primary: #F2F2F2;
   --bg-button: #11572D;
-  --bg-disable : #86bab8;
+  --bg-disable: #86bab8;
+  --bg-gray: gray;
   --box-shadow-color: rgba(63, 217, 125, 0.48);
 }
 

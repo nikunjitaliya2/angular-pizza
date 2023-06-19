@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../../core/service/client/client.service";
 import * as moment from "moment";
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-panel',
@@ -8,13 +9,40 @@ import * as moment from "moment";
   styleUrls: ['./panel.component.css']
 })
 export class PanelComponent implements OnInit {
-  now = moment
-  allOrderDetails: any
 
-  constructor(private clientService: ClientService) {
+  allOrderDetails: any
+  orderStatus: FormControl | any
+
+  constructor(
+    private clientService: ClientService,
+    private formBuilder: FormBuilder,
+  ) {
   }
 
   ngOnInit() {
+    this.allCustomersOrders()
+    this.orderStatus = this.formBuilder.group({
+      status: new FormControl('', [Validators.required])
+    });
+  }
+
+  changeOrderStatus(orderId: string) {
+    if (orderId){
+      let orderDetails : object = {
+        orderId: orderId,
+        OrderStatus : this.orderStatus.value.status
+      }
+      this.clientService.changeOrderStatus(orderDetails).subscribe(
+      (res) => {
+        console.log('response',res)
+      },
+      (err) =>{
+        console.log('error',err)
+      })
+    }
+  }
+
+  allCustomersOrders() {
     this.clientService.getAllCustomerOrder().subscribe({
       next: (res) => {
         this.allOrderDetails = res
@@ -25,4 +53,7 @@ export class PanelComponent implements OnInit {
     })
   }
 
+  getMoment(time: string) {
+    return moment(time).format('hh:mm A')
+  }
 }

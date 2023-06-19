@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import {ClientService} from "../../core/service/client/client.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-orders',
@@ -8,18 +9,22 @@ import {ClientService} from "../../core/service/client/client.service";
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-  now = moment
   userDetails = JSON.parse(<string>localStorage.getItem('user-details'))
   customerOrders: any;
 
-  constructor(private clientService: ClientService) {
-    // this.now = moment(order.createdAt).format('hh:mm A'); // add this 2 of 4
-    // console.log('hello world', this.now.format()); // add this 3 of 4
-    // console.log(this.now.add(7, 'days').format());
+  constructor(
+    private clientService: ClientService,
+    private router: Router
+  ) {
+
 
   }
   ngOnInit(): void {
-    console.log('userDetails',this.userDetails)
+    this.getAllOrder()
+  }
+
+
+  getAllOrder() {
     this.clientService.getOrders(this.userDetails._id).subscribe(
       (res) => {
         this.customerOrders = res
@@ -30,10 +35,11 @@ export class OrdersComponent implements OnInit {
     )
   }
 
-
-  getAllOrder() {
-
+  singleOrder(details: any) {
+    localStorage.setItem('order-details', JSON.stringify(details))
+    this.router.navigate([`/cart/orders/${details._id}`])
   }
-
-
+  getMoment(time: string) {
+    return moment(time).format('hh:mm A')
+  }
 }

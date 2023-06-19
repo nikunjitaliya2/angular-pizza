@@ -13,7 +13,9 @@
         <tbody *ngFor="let order of customerOrders">
         <tr>
           <td class="border px-4 py-2">
-            <span class="text-common-color">{{order._id}}</span>
+<!--            how to pass id with routerlink-->
+<!--            <span class="text-common-color cursor-pointer hover:border-gray-500" [routerLink]="['/cart/orders/', order._id]">{{order._id}}</span>-->
+            <span class="text-common-color cursor-pointer hover:border-gray-500" (click)="singleOrder(order)">{{order._id}}</span>
           </td>
           <td class="border px-4 py-2">
             {{order.phone}}
@@ -22,7 +24,7 @@
             {{order.address}}
           </td>
           <td class="border px-4 py-2">
-            {{now(order.createdAt).format('hh:mm A')}}
+            {{getMoment(order.createdAt)}}
           </td>
         </tr>
         </tbody>
