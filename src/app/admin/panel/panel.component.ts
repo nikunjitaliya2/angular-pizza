@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ClientService} from "../../core/service/client/client.service";
 import * as moment from "moment";
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {Socket} from "ngx-socket-io";
 
 @Component({
   selector: 'app-panel',
@@ -16,6 +17,7 @@ export class PanelComponent implements OnInit {
   constructor(
     private clientService: ClientService,
     private formBuilder: FormBuilder,
+    private socket: Socket
   ) {
   }
 
@@ -24,17 +26,23 @@ export class PanelComponent implements OnInit {
     this.orderStatus = this.formBuilder.group({
       status: new FormControl('', [Validators.required])
     });
+
+    // Handle Socket.IO events
+    this.socket.on('join', (data: any) => {
+      // Handle the received data
+      console.log('Received data:', data);
+    });
   }
 
   changeOrderStatus(orderId: string) {
     if (orderId){
       let orderDetails : object = {
-        orderId: orderId,
-        OrderStatus : this.orderStatus.value.status
+        status : this.orderStatus.value.status
       }
-      this.clientService.changeOrderStatus(orderDetails).subscribe(
+      this.clientService.changeOrderStatus(orderDetails,orderId).subscribe(
       (res) => {
         console.log('response',res)
+        // this.socket.emit('orderUpdated', orderId);
       },
       (err) =>{
         console.log('error',err)

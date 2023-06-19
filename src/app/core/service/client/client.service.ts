@@ -23,9 +23,8 @@ export class ClientService {
     return this.httpClient.get(`${environment.BaseUrl}/orders`, this.headerService.setHeaders()).pipe(catchError(this.headerService.errorHandler));
   }
 
-  changeOrderStatus(data : any){
-    console.log('data',data)
-    return this.httpClient.post(`${environment.BaseUrl}/orders/status`,data, this.headerService.setHeaders()).pipe(catchError(this.headerService.errorHandler))
+  changeOrderStatus(data : any , id: string){
+    return this.httpClient.put(`${environment.BaseUrl}/orders/${id}`,data, this.headerService.setHeaders()).pipe(catchError(this.headerService.errorHandler))
   }
 
   getOrdersByOrderId(id: string) {
