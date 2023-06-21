@@ -4,6 +4,7 @@ import {ProductsService} from "../../core/service/products/products.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TOAST_STATE, ToastService} from "../../core/service/toast.service";
 import {IUser} from "../../interfaces/interface";
+import {Socket} from "ngx-socket-io";
 
 @Component({
   selector: 'app-cart',
@@ -31,7 +32,8 @@ export class CartComponent implements OnInit {
     private router: Router,
     private productsService: ProductsService,
     private formBuilder: FormBuilder,
-    private toast: ToastService
+    private toast: ToastService,
+    private socket: Socket
   ) {
     this.availableCart = <string[]>JSON.parse(<string>localStorage.getItem('cart')) || []
   }
@@ -77,34 +79,38 @@ export class CartComponent implements OnInit {
   }
 
   orderNow() {
-
-    if (!this.UserDetails) {
+    if (this.UserDetails) {
+      const items = this.saveOrderDetails(this.UserDetails);
+      if (this.UserDetails.role === 'customer') {
+        this.productsService.createOrder(items).subscribe(
+          (res) => {
+            this.toast.showToast(
+              TOAST_STATE.success,
+              'Order Is Successfully Placed');
+            this.toast.dismiss()
+            this.router.navigate(['/cart/orders'])
+            console.log('res,res', res)
+            localStorage.removeItem('cart')
+          },
+          (err) => {
+            console.log('err', err)
+          });
+      } else {
+        this.toast.showToast(
+          TOAST_STATE.success,
+          'Role Must be Customer');
+        this.toast.dismiss()
+        this.router.navigate(['/admin/orders'])
+      }
+    } else {
       this.toast.showToast(
         TOAST_STATE.success,
         'Going to Login First');
       this.toast.dismiss()
       this.router.navigate(['/auth/login'])
-    } else {
-      const items = this.saveOrderDetails(this.UserDetails)
-      this.productsService.createOrder(items).subscribe(
-        (res) => {
-          this.toast.showToast(
-            TOAST_STATE.success,
-            'Order Is Successfully');
-          this.toast.dismiss()
-          if (this.UserDetails.role === 'customer') {
-            this.router.navigate(['/cart/orders'])
-          }
-          else {
-            this.router.navigate(['/admin/orders'])
-          }
-          localStorage.removeItem('cart')
-        },
-        (err) => {
-          console.log('err', err)
-        })
     }
   }
+
 
   saveOrderDetails(UserDetails: IUser) {
 

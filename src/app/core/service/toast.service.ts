@@ -21,7 +21,7 @@ export class ToastService {
   constructor() {
   }
 
-  showToast(toastState: string, toastMsg: string): void {
+  showToast(toastState: string, toastMsg: any): void {
     this.toastState$.next(toastState);
 
     this.toastMessage$.next(toastMsg);

@@ -50,7 +50,7 @@
                    placeholder="Phone Number">
             <div  class="text-red-500">
               <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.required">
-                Password is required.
+                Phone number is required.
               </div>
               <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.minlength">
                 Phone number should be 10 character long.
