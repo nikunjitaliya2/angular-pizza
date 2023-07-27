@@ -4,7 +4,7 @@ import {ProductsService} from "../../core/service/products/products.service";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {TOAST_STATE, ToastService} from "../../core/service/toast.service";
 import {IUser} from "../../interfaces/interface";
-import {Socket} from "ngx-socket-io";
+import {loadStripe} from "@stripe/stripe-js";
 
 @Component({
   selector: 'app-cart',
@@ -12,6 +12,7 @@ import {Socket} from "ngx-socket-io";
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  cart: any
   availableCart: any[]
   products: any[] = []
   userContact: FormGroup | any;
@@ -32,8 +33,7 @@ export class CartComponent implements OnInit {
     private router: Router,
     private productsService: ProductsService,
     private formBuilder: FormBuilder,
-    private toast: ToastService,
-    private socket: Socket
+    private toast: ToastService
   ) {
     this.availableCart = <string[]>JSON.parse(<string>localStorage.getItem('cart')) || []
   }
@@ -48,7 +48,7 @@ export class CartComponent implements OnInit {
           Validators.minLength(10),
           Validators.maxLength(10),
           Validators.pattern('[0-9]{10,}')]),
-      paymentType: new FormControl('', [Validators.required])
+      // paymentType: new FormControl('', [Validators.required])
     });
   }
 
@@ -78,9 +78,51 @@ export class CartComponent implements OnInit {
     }
   }
 
-  orderNow() {
+  async paymentMethod(method: any) {
+  const stripe = await loadStripe('pk_test_51NLgM9SDKFNfPGl4cQo8BBZC6Iv1jGlpoPZqqCnLSfKSY0VC4tO06eSy1W5l61gtU9HILyWVGuSFSPijnvkSuDdj0049bZCPoy');
+
+    let mountWidget = () => {
+      const elements = stripe?.elements();
+      let style = {
+        base: {
+          color: '#32325d',
+          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+          fontSmoothing: 'antialiased',
+          fontSize: '16px',
+          '::placeholder': {
+            color: '#aab7c4'
+          },
+        },
+        invalid: {
+          color: '#fa755a',
+          iconColor: '#fa755a'
+        }
+      };
+      this.cart = elements?.create('card', {style, hidePostalCode: true});
+      this.cart.mount('#card-element')
+    }
+    // display widget using stripe
+    if (method.target.value === 'POD') {
+      // displaying widget
+      this.OrderDetails.paymentType = method.target.value;
+      mountWidget()
+    }else {
+      // this.cart?.destroy()
+    }
+
+    // stripe?.createToken(this.cart).then((result)=> {
+    //   console.log('result', result);
+    // }).catch(errr => {
+    //   console.log('errpr',errr)
+    // })
+
+
+  }
+
+  async orderNow() {
     if (this.UserDetails) {
       const items = this.saveOrderDetails(this.UserDetails);
+      console.log(items)
       if (this.UserDetails.role === 'customer') {
         this.productsService.createOrder(items).subscribe(
           (res) => {
@@ -88,7 +130,7 @@ export class CartComponent implements OnInit {
               TOAST_STATE.success,
               'Order Is Successfully Placed');
             this.toast.dismiss()
-            this.router.navigate(['/cart/orders'])
+            // this.router.navigate(['/cart/orders'])
             console.log('res,res', res)
             localStorage.removeItem('cart')
           },
