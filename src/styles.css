@@ -1,8 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'DM Sans', sans-serif; }
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+app-root {   z-index: 1; }
+app-toaster, .toast-class {   z-index: 211; }
+:root {
+  --bg-primary: #F2F2F2;
+  --bg-button: #11572D;
+  --bg-disable: #86bab8;
+  --bg-gray: gray;
+  --box-shadow-color: rgba(63, 217, 125, 0.48);
+}
+
+.bg-common-color{
+  background-color: var(--bg-primary);
+}
+.text-common-color{
+  color: var(--bg-button)
+}
+.button-color{
+  background-color: var(--bg-button);
+}
+.custom-header {
+  height: calc(100vh - 85px) !important;
+}
+.button-color:disabled {
+  background-color: var(--bg-disable);
+  cursor: not-allowed;
+}

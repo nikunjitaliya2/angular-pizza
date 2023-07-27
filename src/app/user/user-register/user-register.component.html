@@ -1,0 +1,91 @@
+<!--<div class="container mt-5">-->
+<!--    <form class="row g-3" [formGroup]="register" >-->
+<!--        <div class="col-12">-->
+<!--            <label for="name" class="form-label">Name</label>-->
+<!--            <input type="text" class="form-control" id="name" formControlName="name" />-->
+<!--          </div>-->
+<!--          <div class="col-12">-->
+<!--            <label for="email" class="form-label">Email</label>-->
+<!--            <input type="text" class="form-control" id="email" formControlName="email"/>-->
+<!--          </div>-->
+<!--        <div class="col-12">-->
+<!--          <label for="userId" class="form-label">UserId</label>-->
+<!--          <input type="text" class="form-control" id="userId" formControlName="userId" />-->
+<!--        </div>-->
+<!--        <div class="col-12">-->
+<!--          <label for="password" class="form-label">Password</label>-->
+<!--          <input type="text" class="form-control" id="password" formControlName="password"/>-->
+<!--        </div>-->
+<!--        <div class="col-md-6">-->
+<!--          <button class="btn btn-success me-3" (click)="Register()"> Register</button>-->
+<!--          <button class="btn btn-danger" [routerLink]="['/auth/login']"> Back</button>-->
+<!--        </div>-->
+<!--      </form>-->
+<!--</div>-->
+<section class="login h-screen flex justify-center items-center custom-header">
+  <div class="w-full max-w-md">
+    <form  [formGroup]="register" (ngSubmit)="onSubmit()" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+          Name
+        </label>
+        <input name="name"
+               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="username" type="text" placeholder="Enter Name" formControlName="name">
+      <div class="text-red-500">
+        <div *ngIf="register.controls.name.touched && register.controls.name.errors?.required">
+          Name is required.
+        </div>
+        <div *ngIf="register.controls.name.touched && register.controls.name.errors?.minlength">
+          Name Should be 6 character long.
+        </div>
+      </div>
+      </div>
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="useremail">
+          Email
+        </label>
+        <input name="email"
+               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+               id="useremail" type="email" placeholder="Enter your email" formControlName="email">
+        <div
+             class="text-red-500">
+          <div *ngIf="register.controls.email.touched && register.controls.email.errors?.required">
+            Email is required.
+          </div>
+          <div *ngIf="register.controls.email.touched && register.controls.email.errors?.email">
+            Invalid email format.
+          </div>
+        </div>
+      </div>
+      <div class="mb-6">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+          Password
+        </label>
+        <input name="password"
+               class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+               id="password" type="password" placeholder="Enter your password" formControlName="password">
+        <div
+          class="text-red-500">
+          <div *ngIf="register.controls.password.touched && register.controls.password.errors?.required">
+            Password is required.
+          </div>
+          <div *ngIf="register.controls.password.touched && register.controls.password.errors?.minlength">
+            Password Should be 6 character long
+          </div>
+        </div>
+      </div>
+      <div class="flex items-center justify-between">
+        <span class="inline-block align-baseline font-bold text-sm cursor-pointer text-common-color" routerLink="/auth/login">
+          Already have account?
+        </span>
+        <button class="rounded-full button-color px-6 py-2 text-white mt-2" [disabled]="register.invalid" type="submit">Register</button>
+      </div>
+    </form>
+    <p class="text-center text-gray-500 text-xs">
+      &copy;2020 Pizza-Fav. All rights reserved.
+    </p>
+  </div>
+</section>
+<app-toaster></app-toaster>

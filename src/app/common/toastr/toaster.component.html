@@ -1,0 +1,15 @@
+﻿<div class="m-2"
+  [@toastTrigger]="(toast.showsToast$ | async) ? 'open' : 'close'"
+  [class]="toast.toastState$ | async">
+  <div style="max-width: 160px;">
+    {{ toast.toastMessage$ | async }}
+  </div>
+
+  <button
+    class="close-btn"
+    (click)="dismiss()">
+    <small>
+      Dismiss
+    </small>
+  </button>
+</div>

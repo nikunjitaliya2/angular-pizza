@@ -1,1 +1,33 @@
+/*ul li.active {*/
+/*  border-bottom: 2px solid black;*/
+/*}*/
 
+@media (max-width: 640px) {
+  #menu {
+    display: none;
+  }
+
+  #menuToggle {
+    display: block;
+  }
+
+  #menuToggle svg {
+    fill: #000;
+  }
+
+  #menuToggle.active svg {
+    fill: #000;
+  }
+
+  #menuToggle.active ~ #menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    padding: 1rem;
+    z-index: 20;
+  }
+}

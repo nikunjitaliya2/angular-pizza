@@ -1,27 +1,40 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import { HeaderComponent } from './common/header/header.component';
-import { FooterComponent } from './common/footer/footer.component';
-import { HomeComponent } from './home/home/home.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {FooterComponent} from './common/footer/footer.component';
+import {HomeModule} from "./home/home.module";
+import {HeaderComponent} from "./common/header/header.component";
+import {HttpClientModule} from "@angular/common/http";
+import {UserModule} from "./user/user.module";
+import {CartModule} from "./customer/cart.module";
+import {NotfoundComponent} from './common/notfound/notfound.component';
+import {AdminModule} from "./admin/admin.module";
+import {FormsModule} from "@angular/forms";
+import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
 
+const config: SocketIoConfig = {url: 'http://localhost:5555', options: {transports: ['websocket'], forceNew: true}};
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
     FooterComponent,
-    HomeComponent
+    HeaderComponent,
+    NotfoundComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSlideToggleModule
+    HomeModule,
+    HttpClientModule,
+    UserModule,
+    CartModule,
+    AdminModule,
+    FormsModule,
+    SocketIoModule.forRoot(config)
   ],
   providers: [],
   bootstrap: [AppComponent]

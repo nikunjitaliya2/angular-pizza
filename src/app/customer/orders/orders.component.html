@@ -1,0 +1,37 @@
+<section class="orders light-section">
+  <div class="container mx-auto pt-12">
+    <h1 class="font-bold text-lg mb-4">All orders</h1>
+      <table class="w-full table-auto bg-white">
+        <thead>
+        <tr>
+          <th class="px-4 py-2 text-left">Orders</th>
+          <th class="px-4 py-2 text-left">Phone</th>
+          <th class="px-4 py-2 text-left">Address</th>
+          <th class="px-4 py-2 text-left">Time</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let order of customerOrders">
+        <tr>
+          <td class="border px-4 py-2">
+<!--            how to pass id with routerlink-->
+<!--            <span class="text-common-color cursor-pointer hover:border-gray-500" [routerLink]="['/cart/orders/', order._id]">{{order._id}}</span>-->
+            <span class="text-common-color cursor-pointer hover:border-gray-500" (click)="singleOrder(order)">{{order._id}}</span>
+          </td>
+          <td class="border px-4 py-2">
+            {{order.phone}}
+          </td>
+          <td class="border px-4 py-2">
+            {{order.address}}
+          </td>
+          <td class="border px-4 py-2">
+            {{getMoment(order.createdAt)}}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    <p class="p-4 text-xl" *ngIf="customerOrders?.length === 0">No orders found!</p>
+  </div>
+
+
+  <!--  </div>-->
+</section>

@@ -1,0 +1,36 @@
+<section class="status">
+  <div class="container mx-auto">
+    <div class="status-box w-full lg:w-2/3 mx-auto">
+      <div class="flex items-center justify-between mb-12">
+        <h1 class="text-xl font-bold">Track delivery status</h1>
+        <h6 class="bg-white py-1 rounded-full px-4 text-green-600 text-xs">Order Is Almost There</h6>
+        <input id="hiddenInput" type="hidden" value="10:12">
+      </div>
+      <ul *ngIf="isCancelled === false; else cancelled">
+        <li class="status_line text-sm md:text-xl pb-16" [ngClass]="order?.status === 'ORDER_PLACE' ? 'current' : ''" dataStatus="ORDER_PLACE" >
+          <span>Order Placed</span>
+          <small *ngIf="order?.status === 'ORDER_PLACE'">{{this.getMoment(order?.updatedAt)}}</small>
+        </li>
+        <li class="status_line text-sm md:text-xl pb-16" [ngClass]="order?.status === 'ORDER_CONFIRM' ? 'current' : ''" dataStatus="ORDER_CONFIRM">
+          <span>Order confirmation</span>
+          <small *ngIf="order?.status === 'ORDER_CONFIRM'">{{this.getMoment(order?.updatedAt)}}</small>
+        </li>
+        <li class="status_line text-sm md:text-xl pb-16" [ngClass]="order?.status === 'PREPARATION' ? 'current' : ''" dataStatus="PREPARATION">
+          <span>Preparation</span>
+          <small *ngIf="order?.status === 'PREPARATION'">{{this.getMoment(order?.updatedAt)}}</small>
+        </li>
+        <li class="status_line text-sm md:text-xl pb-16 " [ngClass]="order?.status === 'OUT_FOR_DELIVERY' ? 'current' : ''" dataStatus="OUT_FOR_DELIVERY">
+          <span>Out for delivery </span>
+          <small *ngIf="order?.status === 'OUT_FOR_DELIVERY'">{{this.getMoment(order?.updatedAt)}}</small>
+        </li>
+        <li class="status_line text-sm md:text-xl" [ngClass]="order?.status === 'COMPLETED' ? 'current' : ''" dataStatus="COMPLETED">
+          <span>Complete</span>
+          <small *ngIf="order?.status === 'COMPLETED'">{{this.getMoment(order?.updatedAt)}}</small>
+        </li>
+      </ul>
+      <ng-template #cancelled>
+        <p>Order is Cancelled</p>
+      </ng-template>
+    </div>
+  </div>
+</section>

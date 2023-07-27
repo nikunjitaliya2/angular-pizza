@@ -1,0 +1,98 @@
+<div class="custom-header py-16">
+  <div class="order container mx-auto w-1/2" *ngIf="availableCart.length !== 0 else notFound">
+    <div class="flex items-center border-b border-gray-300 pb-2">
+      <img src="assets/pizza-images/img/cart-black.png" alt="cart">
+      <h1 class="font-bold ml-4 text-2xl">Order Summery</h1>
+    </div>
+    <div class="border-b" *ngFor="let item of products">
+    <div class="flex items-center my-8">
+      <div class="h-24 w-24 mx-auto relative">
+        <img class="h-full w-full rounded-full object-cover" [src]="item.image" alt="">
+        <div class="absolute inset-0 rounded-full shadow-lg shadow-gray-500/50"></div>
+      </div>
+      <div class="ml-4 flex-1">
+        <h1 class="uppercase">{{item.name}}</h1>
+        <span class="uppercase">{{item.size}}</span>
+        <div>
+          <button class="text-gray-400 transition duration-100 ease-in-out hover:text-[var(--bg-button)]" (click)="removeCart(item, item._id)">Remove</button>
+        </div>
+      </div>
+      <div class="flex-1">
+        <div class="flex justify-center w-1/5">
+          <span class="cursor-pointer" (click)="TotalQuantity('-', item._id)" >-</span>
+          <input class="mx-2 border text-center w-8" [(ngModel)]="item.quantity" type="text" >
+          <span class="cursor-pointer" (click)="TotalQuantity('+', item._id)">+</span>
+        </div>
+      </div>
+      <span class="font-bold text-lg"> ₹{{item.price}}</span>
+    </div>
+  </div>
+    <div class="text-right py-4">
+      <div>
+        <span class="font-bold text-lg">Total Amount:</span>
+        <span class="font-bold text-lg text-common-color ml-2">₹{{totalCost}}</span>
+      </div>
+      <div>
+        <form class="mt-12" [formGroup]="userContact" (ngSubmit)="orderNow()">
+          <div>
+            <input type="text" name="address" class="border border-gray-400 p-2 w-1/2 mb-2"
+                   formControlName="address"
+                   placeholder="Enter Address">
+            <div>
+              <span *ngIf="userContact.get('address').invalid && userContact.get('address').touched"
+                    class="text-red-500">Enter a address.</span>
+            </div>
+          </div>
+          <div>
+            <input type="text" class="border border-gray-400 p-2 w-1/2 my-2"
+                   name="phone"
+                   formControlName="phone"
+                   placeholder="Phone Number">
+            <div  class="text-red-500">
+              <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.required">
+                Phone number is required.
+              </div>
+              <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.minlength">
+                Phone number should be 10 character long.
+              </div>
+              <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.maxlength">
+                Phone number cannot exceed 10 characters.
+              </div>
+              <div *ngIf="userContact.get('phone').touched && userContact.get('phone').errors?.pattern">
+                Phone number should only take integer.
+              </div>
+            </div>
+          </div>
+          <select formControlName="paymentType" class="my-2 p-2 w-1/2 bg-white border border-gray-400 divide-y divide-gray-200">
+            <option value="">Select an option</option>
+            <option value="EOD">Pay Online</option>
+            <option value="COD">Cash On Delivery</option>
+          </select>
+          <div  *ngIf="userContact.controls.paymentType.errors && userContact.controls.paymentType.touched" class="text-red-500">
+            Please select an option.
+          </div>
+
+
+          <div>
+            <button class="rounded-full button-color px-6 py-2 text-white mt-2" type="submit"
+                    [disabled]="userContact.invalid">{{!UserDetails ? "Login Now" : "Order Now"}}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <ng-template #notFound>
+    <div class="py-16">
+      <div class="container mx-auto text-center">
+        <h1 class="text-3xl font-bold mb-2">Cart Empty</h1>
+        <p class="text-gray-500 text-lg-mb-12">You probably haven't ordered a pizza yet.
+          <br>
+          To order a pizza, go to the main page.</p>
+        <img class="w-2/5 mx-auto" src="assets/pizza-images/img/empty-cart.png" alt="empty-cart">
+        <button class="rounded-full button-color px-6 py-2 text-white my-6" (click)="back()">back to homepage</button>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
