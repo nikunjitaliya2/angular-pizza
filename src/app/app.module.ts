@@ -14,8 +14,9 @@ import {NotfoundComponent} from './common/notfound/notfound.component';
 import {AdminModule} from "./admin/admin.module";
 import {FormsModule} from "@angular/forms";
 import {SocketIoModule, SocketIoConfig} from 'ngx-socket-io';
+import {environment} from "../environment/environment";
 
-const config: SocketIoConfig = {url: 'http://localhost:5555', options: {transports: ['websocket'], forceNew: true}};
+const config: SocketIoConfig = {url: environment.SocketUrl, options: {transports: ['websocket'], forceNew: true}};
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ const config: SocketIoConfig = {url: 'http://localhost:5555', options: {transpor
     CartModule,
     AdminModule,
     FormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
   ],
   providers: [],
   bootstrap: [AppComponent]

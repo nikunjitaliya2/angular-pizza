@@ -63,17 +63,21 @@
               </div>
             </div>
           </div>
-          <select formControlName="paymentType" class="my-2 p-2 w-1/2 bg-white border border-gray-400 divide-y divide-gray-200">
-            <option value="">Select an option</option>
-            <option value="EOD">Pay Online</option>
-            <option value="COD">Cash On Delivery</option>
+<!--          <select-->
+<!--                  (ngModelChange)="paymentMethod($event)" formControlName="paymentType" class="my-2 p-2 w-1/2 bg-white border border-gray-400 divide-y divide-gray-200">-->
+<!--            <option value="">--Select-Payment-Option--</option>-->
+<!--            <option value="POD">Pay Online</option>-->
+<!--            <option value="COD">Cash On Delivery</option>-->
+<!--          </select>-->
+          <select (change)="paymentMethod($event)"  name="paymentType" class="my-2 p-2 w-1/2 bg-white border border-gray-400 divide-y divide-gray-200">
+            <option value="COD">Cash on delivery</option>
+            <option value="POD">Pay with card</option>
           </select>
-          <div  *ngIf="userContact.controls.paymentType.errors && userContact.controls.paymentType.touched" class="text-red-500">
-            Please select an option.
-          </div>
-
-
-          <div>
+<!--          <div  *ngIf="userContact.controls.paymentType.errors && userContact.controls.paymentType.touched" class="text-red-500">-->
+<!--            Please select an option.-->
+<!--          </div>-->
+          <div >
+            <div id="card-element" class="mt-4"></div>
             <button class="rounded-full button-color px-6 py-2 text-white mt-2" type="submit"
                     [disabled]="userContact.invalid">{{!UserDetails ? "Login Now" : "Order Now"}}
             </button>
@@ -95,4 +99,3 @@
     </div>
   </ng-template>
 </div>
-
